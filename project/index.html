@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="geo_map.js"></script>
 <style type="text/css">
 
 /* Legend Font Style */
@@ -14,8 +15,10 @@ body {
 /* Legend Position Style */
 .legend {
 	position:absolute;
-	left:20px;
-	top:30px;
+	top: 50;
+	right: 30;
+	bottom: 30;
+	left: 100;
 }
 
 .axis text {
@@ -28,131 +31,75 @@ body {
 	shape-rendering: crispEdges;
 }
 
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
 </style>
 </head>
 <body>
+  
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="geoMap()">Median Listing Price</a>
+  <a href="#">Median Listing Price MM</a>
+  <a href="#">Median Listing Price YY</a>
+  <a href="#">Active Listing Count</a>
+</div>
+
+<div id="main">
+
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+</div>
 <script type="text/javascript">
-		
-//Width and height of map
-var width = 960;
-var height = 500;
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
 
-var lowColor = '#f9f9f9'
-var highColor = '#bc2a66'
-
-// D3 Projection
-var projection = d3.geoAlbersUsa()
-  .translate([width / 2, height / 2]) // translate to center of screen
-  .scale([1000]); // scale things down so see entire US
-
-// Define path generator
-var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
-  .projection(projection); // tell path generator to use albersUsa projection
-
-//Create SVG element and append map to the SVG
-var svg = d3.select("body")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height);
-
-var feature = "median_listing_price";
-// Load in my states data!
-d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
-	var dataArray = [];
-	for (var d = 0; d < data.length; d++) {
-		dataArray.push(parseFloat(data[d][feature]))
-	}
-	var minVal = d3.min(dataArray)
-	var maxVal = d3.max(dataArray)
-	var ramp = d3.scaleLinear().domain([minVal,maxVal]).range([lowColor,highColor])
-	
-  // Load GeoJSON data and merge with states data
-  d3.json("https://raw.githubusercontent.com/AmitD26/Air-pollution-analytics/master/static/us-states.json", function(json) {
-
-    // Loop through each state data value in the .csv file
-    for (var i = 0; i < data.length; i++) {
-
-      // Grab State Name
-      var dataState = data[i].state;
-      // Grab data value 
-      var dataValue = data[i][feature];
-
-      //console.log(dataState);
-      //console.log(dataValue);
-
-      // Find the corresponding state inside the GeoJSON
-      for (var j = 0; j < json.features.length; j++) {
-        var jsonState = json.features[j].properties.name;
-
-        if (dataState.toLowerCase() == jsonState.toLowerCase()) {
-
-          // Copy the data value into the JSON
-          json.features[j].properties.value = dataValue;
-
-
-
-          // Stop looking through the JSON
-          break;
-        }
-      }
-    }
-
-    // Bind the data to the SVG and create one path per GeoJSON feature
-    svg.selectAll("path")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .style("stroke", "#fff")
-      .style("stroke-width", "1")
-      .style("fill", function(d) {  console.log(d.properties.value) ; return ramp(d.properties.value) });
-    
-		// add a legend
-		var w = 140, h = 300;
-
-		var key = d3.select("body")
-			.append("svg")
-			.attr("width", w)
-			.attr("height", h)
-			.attr("class", "legend");
-
-		var legend = key.append("defs")
-			.append("svg:linearGradient")
-			.attr("id", "gradient")
-			.attr("x1", "100%")
-			.attr("y1", "0%")
-			.attr("x2", "100%")
-			.attr("y2", "100%")
-			.attr("spreadMethod", "pad");
-
-		legend.append("stop")
-			.attr("offset", "0%")
-			.attr("stop-color", highColor)
-			.attr("stop-opacity", 1);
-			
-		legend.append("stop")
-			.attr("offset", "100%")
-			.attr("stop-color", lowColor)
-			.attr("stop-opacity", 1);
-
-		key.append("rect")
-			.attr("width", w - 100)
-			.attr("height", h)
-			.style("fill", "url(#gradient)")
-			.attr("transform", "translate(0,10)");
-
-		var y = d3.scaleLinear()
-			.range([h, 0])
-			.domain([minVal, maxVal]);
-
-		var yAxis = d3.axisRight(y);
-
-		key.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(41,10)")
-			.call(yAxis)
-  });
-});
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
 </script>
 </body>
 </html>

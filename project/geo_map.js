@@ -1,6 +1,8 @@
+function geoMap() {
 //Width and height of map
-var width = 960;
-var height = 500;
+		var margin = {top: 50, right: 10, bottom: 30, left: 150},
+    		width = 1100 - margin.left - margin.right,
+    		height = 550 - margin.top - margin.bottom;
 
 var lowColor = '#f9f9f9'
 var highColor = '#bc2a66'
@@ -20,36 +22,41 @@ var svg = d3.select("body")
   .attr("width", width)
   .attr("height", height);
 
+var feature = "median_listing_price";
 // Load in my states data!
 d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
 	var dataArray = [];
 	for (var d = 0; d < data.length; d++) {
-		dataArray.push(parseFloat(data[d].value))
+		dataArray.push(parseFloat(data[d][feature]))
 	}
 	var minVal = d3.min(dataArray)
 	var maxVal = d3.max(dataArray)
 	var ramp = d3.scaleLinear().domain([minVal,maxVal]).range([lowColor,highColor])
 	
   // Load GeoJSON data and merge with states data
-  d3.json("https://d3js.org/us-10m.v1.json", function(json) {
+  d3.json("https://raw.githubusercontent.com/AmitD26/Air-pollution-analytics/master/static/us-states.json", function(json) {
 
     // Loop through each state data value in the .csv file
     for (var i = 0; i < data.length; i++) {
 
       // Grab State Name
       var dataState = data[i].state;
-
       // Grab data value 
-      var dataValue = data[i].value;
+      var dataValue = data[i][feature];
+
+      //console.log(dataState);
+      //console.log(dataValue);
 
       // Find the corresponding state inside the GeoJSON
       for (var j = 0; j < json.features.length; j++) {
         var jsonState = json.features[j].properties.name;
 
-        if (dataState == jsonState) {
+        if (dataState.toLowerCase() == jsonState.toLowerCase()) {
 
           // Copy the data value into the JSON
           json.features[j].properties.value = dataValue;
+
+
 
           // Stop looking through the JSON
           break;
@@ -65,7 +72,7 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
       .attr("d", path)
       .style("stroke", "#fff")
       .style("stroke-width", "1")
-      .style("fill", function(d) { return ramp(d.properties.value) });
+      .style("fill", function(d) {  console.log(d.properties.value) ; return ramp(d.properties.value) });
     
 		// add a legend
 		var w = 140, h = 300;
@@ -113,3 +120,4 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
 			.call(yAxis)
   });
 });
+}
