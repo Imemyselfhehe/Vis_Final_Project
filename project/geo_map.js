@@ -1,23 +1,30 @@
-function geoMap() {
+function geoMap(clicked_id) {
+	const clicked = document.getElementById(clicked_id);
+	clicked.classList.add("active");
+	clicked.classList.remove("link-dark");
+
 //Width and height of map
-		var margin = {top: 50, right: 10, bottom: 30, left: 150},
-    		width = 1100 - margin.left - margin.right,
-    		height = 550 - margin.top - margin.bottom;
+		// var margin = {top: 50, right: 10, bottom: 30, left: 150},
+    	// 	width = 1100 - margin.left - margin.right,
+    	// 	height = 550 - margin.top - margin.bottom;
+		var width = "45%";
+		var height = "100%";
+
 
 var lowColor = '#f9f9f9'
 var highColor = '#bc2a66'
 
 // D3 Projection
 var projection = d3.geoAlbersUsa()
-  .translate([width / 2, height / 2]) // translate to center of screen
-  .scale([1000]); // scale things down so see entire US
+  .translate([200, 200]) // translate to center of screen
+  .scale([550]); // scale things down so see entire US
 
 // Define path generator
 var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
   .projection(projection); // tell path generator to use albersUsa projection
 
 //Create SVG element and append map to the SVG
-var svg = d3.select("body")
+var svg = d3.select("#geomap")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
@@ -75,9 +82,9 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
       .style("fill", function(d) {  console.log(d.properties.value) ; return ramp(d.properties.value) });
     
 		// add a legend
-		var w = 140, h = 300;
+		var w = 80, h = 300;
 
-		var key = d3.select("body")
+		var key = d3.select("#geomap")
 			.append("svg")
 			.attr("width", w)
 			.attr("height", h)
@@ -103,10 +110,10 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
 			.attr("stop-opacity", 1);
 
 		key.append("rect")
-			.attr("width", w - 100)
+			.attr("width", w - 55)
 			.attr("height", h)
 			.style("fill", "url(#gradient)")
-			.attr("transform", "translate(0,10)");
+			.attr("transform", "translate(5,10)");
 
 		var y = d3.scaleLinear()
 			.range([h, 0])
@@ -116,7 +123,7 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
 
 		key.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(41,10)")
+			.attr("transform", "translate(30,10)")
 			.call(yAxis)
   });
 });
