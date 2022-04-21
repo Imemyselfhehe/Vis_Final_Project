@@ -1,4 +1,13 @@
 function geoMap(clicked_id,feature) {
+	if(document.getElementById("geomap") != null) 
+        document.getElementById("geomap").innerHTML = "";
+
+	var child_lis = document.querySelectorAll('.side-li');
+	for (var i = 0; i < child_lis.length; i++) {
+		child_lis[i].classList.remove('active');
+		child_lis[i].classList.add('link-dark');
+	}
+
 	const clicked = document.getElementById(clicked_id);
 	clicked.classList.add("active");
 	clicked.classList.remove("link-dark");
@@ -22,7 +31,7 @@ var projection = d3.geoAlbersUsa()
 // Define path generator
 var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
   .projection(projection); // tell path generator to use albersUsa projection
-	d3.select("svg").remove();
+	//d3.select("svg").remove();
 //Create SVG element and append map to the SVG
 var svg = d3.select("#geomap")
   .append("svg")
