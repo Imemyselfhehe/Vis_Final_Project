@@ -1,4 +1,4 @@
-function geoMap(clicked_id) {
+function geoMap(clicked_id,feature) {
 	const clicked = document.getElementById(clicked_id);
 	clicked.classList.add("active");
 	clicked.classList.remove("link-dark");
@@ -22,14 +22,14 @@ var projection = d3.geoAlbersUsa()
 // Define path generator
 var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
   .projection(projection); // tell path generator to use albersUsa projection
-
+	d3.select("svg").remove();
 //Create SVG element and append map to the SVG
 var svg = d3.select("#geomap")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
 
-var feature = "median_listing_price";
+//var feature = "median_listing_price";
 // Load in my states data!
 d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
 	var dataArray = [];
