@@ -16,6 +16,10 @@ body {
     height: 400px;
     margin-left: 230px;
 }
+#barchart{
+    height: 400px;
+    margin-left: 230px;
+}
 /* Legend Position Style */
 .legend {
 	position:absolute;

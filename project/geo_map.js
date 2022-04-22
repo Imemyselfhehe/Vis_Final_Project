@@ -88,7 +88,7 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
       .attr("d", path)
       .style("stroke", "#fff")
       .style("stroke-width", "1")
-      .style("fill", function(d) {  console.log(d.properties.value) ; return ramp(d.properties.value) });
+      .style("fill", function(d) {return ramp(d.properties.value) });
     
 		// add a legend
 		var w = 80, h = 300;
