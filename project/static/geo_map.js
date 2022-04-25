@@ -16,7 +16,7 @@ function geoMap(clicked_id,feature) {
 		// var margin = {top: 50, right: 10, bottom: 30, left: 150},
     	// 	width = 1100 - margin.left - margin.right,
     	// 	height = 550 - margin.top - margin.bottom;
-		var width = "45%";
+		var width = "80%";
 		var height = "100%";
 
 
@@ -40,7 +40,7 @@ var svg = d3.select("#geomap")
 
 //var feature = "median_listing_price";
 // Load in my states data!
-d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
+d3.csv("get_inventory_csv", function(data) {
 	var dataArray = [];
 	for (var d = 0; d < data.length; d++) {
 		dataArray.push(parseFloat(data[d][feature]))

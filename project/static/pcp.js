@@ -1,16 +1,16 @@
 var variables = [];
 
-
+PCPPlotFlask();
 function drawPCPPlot(data) {
   		var margin = {top: 50, right: 30, bottom: 30, left: 100},
-    		width = 1100 - margin.left - margin.right,
+    		width = 900 - margin.left - margin.right,
     		height = 550 - margin.top - margin.bottom;
 
 	d3.select("svg").remove();	
     d3.selectAll("table").remove();
-$('body>.tooltip').remove();
+// $('body>.tooltip').remove();
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#pcp").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
@@ -94,20 +94,42 @@ var y = {}
     .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
     .each(function(d) { d3.select(this).call(d3.axisLeft().ticks(5).scale(y[d])); })
     .append("text")
+    //.attr("font-size", 20)
       .style("text-anchor", "middle")
       .attr("y", -9)
       .text(function(d) { return d; })
       .style("fill", "black")
+      //.attr("font-size", 30);
+      .style("font-size", "14px")
+
   variables = [];
  
 }
 
+// function PCPPlotFlask() {
+//     $.post("", {
+//         'request': 'PCPPlot'
+//     }, function(result) {
+//         PCPPlotData = JSON.parse(result.PCPPlotData);
+//         drawPCPPlot(PCPPlotData);
+//     })
+// }
 
-function PCPPlotFlask() {
-    $.post("", {
-        'request': 'PCPPlot'
-    }, function(result) {
-        PCPPlotData = JSON.parse(result.PCPPlotData);
-        drawPCPPlot(PCPPlotData);
-    })
+
+function PCPPlotFlask(){
+  let url = "http://127.0.0.1:5000/pcp"
+  // const data = { request: 'example' };
+
+  fetch(url, {
+    method: 'POST', // or 'PUT'
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ req: 'PCPPlot' }),
+})
+    .then(data => data.json())
+    .then(response => {
+      PCPPlotData = JSON.parse(response.PCPPlotData);
+      drawPCPPlot(PCPPlotData);
+    });
 }

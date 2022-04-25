@@ -46,7 +46,9 @@ function new_barchart(){
         "translate(" + margin.left + "," + margin.top + ")");
     //console.log(svg)
     // Parse the Data
-    d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
+ 
+
+    d3.csv("get_inventory_csv", function(data) {
         n_bins = 20;
         var {bins_x,hist_data} = calculate_bins(n_bins,data)
         console.log(bins_x, hist_data)
