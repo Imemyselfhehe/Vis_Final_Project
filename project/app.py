@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, send_file
 import json
 from flask import request
 from flask import jsonify
@@ -9,21 +9,37 @@ import numpy as np
 from sklearn.manifold import MDS
 from sklearn.decomposition import PCA
 from collections import OrderedDict
+import os 
+
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-@app.route("/", methods=['POST', 'GET'])
+@app.route('/pcp', methods=['POST', 'GET'])
 def defaultroute():
     if request.method == 'POST':
-        if request.form['request'] == 'PCPPlot':
+        req = request.get_json().get("req")
+
+        #if request.form['request'] == 'PCPPlot':
+        if req == 'PCPPlot':
             data = {'PCPPlotData': json.dumps(PCPPlotData.to_dict(orient="records"))}
             return jsonify(data)
-    else:
-        return render_template('index.html')
+    # else:
+    #     return render_template('index.html')
+
+@app.route('/get_inventory_csv')
+def serve_csv():
+  csv_path = r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv'
+  if not os.path.isfile(csv_path):
+    return "ERROR: file was not found on the server"
+    # Send the file back to the client
+  return send_file(csv_path, as_attachment=True, attachment_filename="inventory.csv")
 
 if __name__ == '__main__':
-  df = pd.read_csv('RDC_Inventory_Core_Metrics_State_History.csv')
+  df = pd.read_csv(r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv')
   df = df.iloc[0:2000,2:]
   df = df.dropna()
   columns = df.columns

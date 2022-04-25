@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="../static/styles.css">
+
+</head>
+<body>
+  
+<!-- <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="geoMap()">Median Listing Price</a>
+  <a href="#">Median Listing Price MM</a>
+  <a href="#">Median Listing Price YY</a>
+  <a href="#">Active Listing Count</a>
+</div> -->
+<div class="container container-new">
+  <div class="row">
+  <div class="col-sm-4 sidemenu-new">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 220px; height:100%;" >
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price')" id="1"> Median Listing Price </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_mm')" id="2"> Median Listing Price MM </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_yy')" id="3"> Median Listing Price YY </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price')" id="4"> Active Listing Count </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price_mm')" id="5"> Active Listing Count MM </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price_yy')" id="6"> Active Listing Count YY </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count')" id="7"> New Listing Count</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count_mm')" id="8"> New Listing Count MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count_yy')" id="9"> New Listing Count YY</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count')" id="10"> Price Increased Count</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count_mm')" id="11"> Price Increased Count MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count_yy')" id="12"> Price Increased Count YY</a>
+    </li>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot')" id="13"> Median Listing Price per Square Foot</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot_mm')" id="14"> Median Listing Price per Square Foot MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot_yy')" id="15"> Median Listing Price per Square Foot YY</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet')" id="16"> Median Square Feet</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet_mm')" id="17"> Median Square Feet MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet_yy')" id="18"> Median Square Feet YY</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price')" id="19"> Average Listing Price</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price_mm')" id="20"> Average Listing Price MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price_yy')" id="21"> Average Listing Price YY</a>
+    </li>
+
+  </ul>
+
+</div>
+</div>
+<div class="col" id="geomap">
+
+</div>
+<!-- <div class="col offset-md-4" id="pcp">
+
+</div> -->
+</div>
+<div class="row">
+  <div class="col" id="barchart">
+    
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<script src="../static/geo_map.js"></script>
+<script src="../static/pcp.js"></script>
+<script src="../static/bar_chart.js"></script>
+</body>
+</html>

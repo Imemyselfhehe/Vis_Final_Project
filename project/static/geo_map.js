@@ -1,4 +1,13 @@
 function geoMap(clicked_id,feature) {
+	if(document.getElementById("geomap") != null) 
+        document.getElementById("geomap").innerHTML = "";
+
+	var child_lis = document.querySelectorAll('.side-li');
+	for (var i = 0; i < child_lis.length; i++) {
+		child_lis[i].classList.remove('active');
+		child_lis[i].classList.add('link-dark');
+	}
+
 	const clicked = document.getElementById(clicked_id);
 	clicked.classList.add("active");
 	clicked.classList.remove("link-dark");
@@ -7,7 +16,7 @@ function geoMap(clicked_id,feature) {
 		// var margin = {top: 50, right: 10, bottom: 30, left: 150},
     	// 	width = 1100 - margin.left - margin.right,
     	// 	height = 550 - margin.top - margin.bottom;
-		var width = "45%";
+		var width = "80%";
 		var height = "100%";
 
 
@@ -22,7 +31,7 @@ var projection = d3.geoAlbersUsa()
 // Define path generator
 var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
   .projection(projection); // tell path generator to use albersUsa projection
-	d3.select("svg").remove();
+	//d3.select("svg").remove();
 //Create SVG element and append map to the SVG
 var svg = d3.select("#geomap")
   .append("svg")
@@ -31,7 +40,7 @@ var svg = d3.select("#geomap")
 
 //var feature = "median_listing_price";
 // Load in my states data!
-d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
+d3.csv("get_inventory_csv", function(data) {
 	var dataArray = [];
 	for (var d = 0; d < data.length; d++) {
 		dataArray.push(parseFloat(data[d][feature]))
@@ -79,7 +88,7 @@ d3.csv("RDC_Inventory_Core_Metrics_State_History.csv", function(data) {
       .attr("d", path)
       .style("stroke", "#fff")
       .style("stroke-width", "1")
-      .style("fill", function(d) {  console.log(d.properties.value) ; return ramp(d.properties.value) });
+      .style("fill", function(d) {return ramp(d.properties.value) });
     
 		// add a legend
 		var w = 80, h = 300;
