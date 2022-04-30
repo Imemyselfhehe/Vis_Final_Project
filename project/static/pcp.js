@@ -2,11 +2,11 @@ var variables = [];
 
 PCPPlotFlask();
 function drawPCPPlot(data) {
-  		var margin = {top: 50, right: 30, bottom: 30, left: 100},
-    		width = 900 - margin.left - margin.right,
-    		height = 550 - margin.top - margin.bottom;
+  		var margin = {top: 50, right: 30, bottom: 30, left: 300},
+    		width = 700 - margin.left - margin.right,
+    		height = 300 - margin.top - margin.bottom;
 
-	d3.select("svg").remove();	
+	  //d3.select("svg").remove();	
     d3.selectAll("table").remove();
 // $('body>.tooltip').remove();
 
@@ -100,7 +100,7 @@ var y = {}
       .text(function(d) { return d; })
       .style("fill", "black")
       //.attr("font-size", 30);
-      .style("font-size", "14px")
+      .style("font-size", "7px")
 
   variables = [];
  

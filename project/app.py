@@ -32,14 +32,14 @@ def defaultroute():
 
 @app.route('/get_inventory_csv')
 def serve_csv():
-  csv_path = r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv'
+  csv_path = r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv'
   if not os.path.isfile(csv_path):
     return "ERROR: file was not found on the server"
     # Send the file back to the client
   return send_file(csv_path, as_attachment=True, attachment_filename="inventory.csv")
 
 if __name__ == '__main__':
-  df = pd.read_csv(r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv')
+  df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
   df = df.iloc[0:2000,2:]
   df = df.dropna()
   columns = df.columns

@@ -1,3 +1,4 @@
+geoMap(1,'median_listing_price');
 function geoMap(clicked_id,feature) {
 	if(document.getElementById("geomap") != null) 
         document.getElementById("geomap").innerHTML = "";
