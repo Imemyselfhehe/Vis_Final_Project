@@ -1,7 +1,7 @@
   
 
-new_lineplot();
-function new_lineplot(){
+lineplotFlask(null);
+function new_lineplot(data){
 
 var margin = {top: 30, right: 30, bottom: 70, left: 300},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
@@ -9,7 +9,7 @@ width = 700 - margin.left - margin.right,
 height = 400 - margin.top - margin.bottom;
 
 //$('body>.tooltip').remove();
-
+d3.selectAll("#lineplot svg").remove();
 var svg = d3.select("#lineplot")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -24,7 +24,7 @@ var svg = d3.select("#lineplot")
     // Parse the Data
 
 
-d3.csv("get_inventory_csv", function(data) {
+//d3.csv("get_inventory_csv", function(data) {
 
 var x = d3.scaleLinear()
 .range([0, width])
@@ -83,6 +83,23 @@ svg.append("text")
 //.text("Elbow Plot");
 
 
-});
+//});
 
 }
+function lineplotFlask( date ){
+    let url = "http://127.0.0.1:5000/lineplot"
+    // const data = { request: 'example' };
+  
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ req: 'linePlot' , 'date' : date }),
+  })
+      .then(data => data.json())
+      .then(response => {
+        lineplotData = JSON.parse(response.lineplotData);
+        new_lineplot(lineplotData);
+      });
+  }

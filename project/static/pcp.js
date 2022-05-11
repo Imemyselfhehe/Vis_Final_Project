@@ -1,14 +1,14 @@
 var variables = [];
 
-PCPPlotFlask();
+PCPPlotFlask( null );
 function drawPCPPlot(data) {
   		var margin = {top: 50, right: 30, bottom: 30, left: 300},
     		width = 700 - margin.left - margin.right,
     		height = 300 - margin.top - margin.bottom;
 
-	  //d3.select("svg").remove();	
-    d3.selectAll("table").remove();
-// $('body>.tooltip').remove();
+    d3.selectAll("#pcp svg").remove();	
+    //d3.selectAll("table").remove();
+    // $('body>.tooltip').remove();
 
 var svg = d3.select("#pcp").append("svg")
 	.attr("width", width + margin.left + margin.right)
@@ -20,6 +20,7 @@ var svg = d3.select("#pcp").append("svg")
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 if(variables.length == 0){
 dimensions = Object.keys(data[0]);
+dimensions.splice(dimensions.indexOf("year") , 1 )
 }else{
   dimensions = variables;
 }
@@ -116,7 +117,7 @@ var y = {}
 // }
 
 
-function PCPPlotFlask(){
+function PCPPlotFlask( date ){
   let url = "http://127.0.0.1:5000/pcp"
   // const data = { request: 'example' };
 
@@ -125,7 +126,7 @@ function PCPPlotFlask(){
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ req: 'PCPPlot' }),
+    body: JSON.stringify({ req: 'PCPPlot' , 'date' : date }),
 })
     .then(data => data.json())
     .then(response => {
