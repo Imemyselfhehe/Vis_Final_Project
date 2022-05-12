@@ -126,6 +126,33 @@ def defaultroute4():
           data = {'geomapPlotData': json.dumps(geomapData.to_dict(orient="records")) , "id": id  }
           return jsonify(data)
 
+@app.route('/scatterplot', methods=['POST', 'GET'])
+def defaultroute5():
+    df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
+    df = df.iloc[0:2000,2:]
+    df = df.dropna()
+    columns = df.columns
+    df = df._get_numeric_data()
+    #print(df)
+    ScatterPlotData = df[[ "new_listing_count" , "price_increased_count" ,  "year"]]
+    #print(df)
+
+    if request.method == 'POST':
+        req = request.get_json().get("req")
+        selectedDate = request.get_json().get("date")
+
+        #if request.form['request'] == 'PCPPlot':
+        #print(req)
+        #print(barPlotData)
+
+
+        if req == 'ScatterPlot':
+          if selectedDate != None:
+            ScatterPlotData = ScatterPlotData[ ( ScatterPlotData["year"] == int(selectedDate) ) ]
+          #print(barPlotData)
+          data = {'ScatterPlotData': json.dumps(ScatterPlotData.to_dict(orient="records"))}
+          return jsonify(data)
+
 @app.route('/get_inventory_csv')
 def serve_csv():
   csv_path = r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv'

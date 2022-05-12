@@ -1,9 +1,10 @@
-
-drawScatterPlot();
-function drawScatterPlot(){
+scatterPlotFlask(null);
+function drawScatterPlot(data){
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+
+    d3.selectAll("#scatterplot svg").remove();	
 
     // append the svg object to the body of the page
     var svg = d3.select("#scatterplot")
@@ -15,7 +16,7 @@ function drawScatterPlot(){
             "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    d3.csv("get_inventory_csv", function(data) {
+    //d3.csv("get_inventory_csv", function(data) {
         console.log(data)
 
     // Add X axis
@@ -66,5 +67,23 @@ function drawScatterPlot(){
         .style("fill", "#957DAD")
 
         
-    })
+    //})
 }
+function scatterPlotFlask( date ){
+    let url = "http://127.0.0.1:5000/scatterplot"
+    // const data = { request: 'example' };
+  
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ req: 'ScatterPlot' , 'date' : date }),
+  })
+      .then(data => data.json())
+      .then(response => {
+        ScatterPlotData = JSON.parse(response.ScatterPlotData);
+        console.log(ScatterPlotData)
+        drawScatterPlot(ScatterPlotData);
+      });
+  }

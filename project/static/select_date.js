@@ -15,6 +15,7 @@ function SelectDate(clicked_id) {
     PCPPlotFlask( clicked_id );
     barFlask( clicked_id );
     lineplotFlask(clicked_id);
+    scatterPlotFlask(clicked_id);
 
     if (active == null){
         geomapFlask('median_listing_price',  clicked_id);
