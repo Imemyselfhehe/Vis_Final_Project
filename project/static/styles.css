@@ -24,7 +24,13 @@ body {
     position: absolute;
 }
 #scatterplot{
-  margin-left: 440px;
+  margin-left: 430px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#lineplot{
+  padding-left: 0px;
+  padding-right: 0px;
 }
 /* Legend Position Style */
 .legend {

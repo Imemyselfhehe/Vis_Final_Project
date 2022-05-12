@@ -3,10 +3,10 @@
 lineplotFlask(null , null);
 function new_lineplot(data){
 
-var margin = {top: 30, right: 30, bottom: 70, left: 300},
+var margin = {top: 30, right: 30, bottom: 70, left: 40},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
-width = 900 - margin.left - margin.right,
-height = 350 - margin.top - margin.bottom;
+width = 350 - margin.left - margin.right,
+height = 400 - margin.top - margin.bottom;
 
 //$('body>.tooltip').remove();
 d3.selectAll("#lineplot svg").remove();
@@ -36,7 +36,7 @@ var nsum = d3.nest()
 .entries(data);
 
 var y = d3.scaleLinear().range([height, 0])
-.domain([0, d3.max(nsum, function(d) {  return parseInt(d.value); })]);
+.domain([0, d3.max(nsum, function(d) {  return parseInt(d.value); })/1000000]);
 
 
 svg.append("path")
@@ -47,18 +47,20 @@ svg.append("path")
 .attr("d", d3.area()
   .x(function(d , i) { return x( i+1 ) })
   .y0(y(0))
-  .y1(function(d) { return y(parseInt(d.value)); })
+  .y1(function(d) { return y((parseInt(d.value))/1000000); })
   )
-
 
 svg.append("g")
 .attr("transform", "translate(0," + height + ")")
 .call(d3.axisBottom(x));
+
 svg.append("text")
 .attr("text-anchor", "middle")
+.attr("transform", "translate(170,0)")
 .attr("x", width-300)
 .attr("y", height+30)
-.text("Months");
+.text("Months")
+.attr("font-size", 14);
 
 svg.append("g")
 .call(d3.axisLeft(y));
@@ -69,7 +71,8 @@ svg.append("text")
 .attr("x", -130)
 .attr("y", -30)
 .attr("transform", "rotate(-90)")
-.text("Inertia")
+.text("Median Listing Price (in Millions)")
+.attr("font-size", 14);
 
        
 //svg.append("text")

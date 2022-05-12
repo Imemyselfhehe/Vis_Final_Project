@@ -3,7 +3,7 @@ var variables = [];
 PCPPlotFlask( null , null );
 function drawPCPPlot(data) {
   		var margin = {top: 50, right: 30, bottom: 30, left: 250},
-    		width = 850 - margin.left - margin.right,
+    		width = 830 - margin.left - margin.right,
     		height = 300 - margin.top - margin.bottom;
 
     d3.selectAll("#pcp svg").remove();	
@@ -88,7 +88,7 @@ var y = {}
       .on("mouseover", highlight)
       .on("mouseleave", doNotHighlight )
 
-
+let di = dimensions.map(function(d) { return d.replace("_"," "); });
   svg.selectAll("myAxis")
     .data(dimensions).enter()
     .append("g")
@@ -99,11 +99,13 @@ var y = {}
     //.attr("font-size", 20)
       .style("text-anchor", "middle")
       .attr("y", -9)
-      .text(function(d) { return d; })
+      // .text(di)
+      .text(function(d){ return d.replace("_"," ");})
       .style("fill", "black")
       //.attr("font-size", 30);
-      .style("font-size", "7px")
+      .style("font-size", "8px")
 
+      //.map(function(d) { return d.median_sq_feet; }))
   variables = [];
  
 }
