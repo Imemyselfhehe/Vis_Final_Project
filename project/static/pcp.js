@@ -57,18 +57,18 @@ var y = {}
     d3.selectAll(".line")
       .transition().duration(200)
       .style("stroke", "lightgrey")
-      .style("opacity", "0.2")
+      .style("opacity", "0.1")
 
     d3.selectAll(".a" + selected_specie)
       .transition().duration(200)
       .style("stroke", color(selected_specie))
-      .style("opacity", "1")
+      .style("opacity", "0.1")
   } 
     var doNotHighlight = function(d){
     d3.selectAll(".line")
       .transition().duration(200).delay(1000)
       .style("stroke", function(d){ return( color(d.K_Means))} )
-      .style("opacity", "1")
+      .style("opacity", "0.1")
   }
 
   function path(d) {
@@ -84,7 +84,7 @@ var y = {}
       .attr("d",  path)
       .style("fill", "none" )
       .style("stroke", function(d){ return( color(d.K_Means))} )
-      .style("opacity", 0.5)
+      .style("opacity", 0.1)
       .on("mouseover", highlight)
       .on("mouseleave", doNotHighlight )
 

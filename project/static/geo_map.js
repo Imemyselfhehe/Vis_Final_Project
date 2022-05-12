@@ -98,12 +98,52 @@ var svg = d3.select("#geomap")
       .attr("d", path)
 	  .attr("name", function(d) { return d.properties.name;})
 	  .attr("id", function(d) { return d.id;})
-      .style("stroke", "#fff")
+      .style("stroke", "#957DAD")
       .style("stroke-width", "1")
       .style("fill", function(d) { return ramp(d.properties.value) })
-	  //.on("mouseover", mouseover)
-	  //.on("mouseout", mouseOutHandler)
+	  .on("mouseover", mouseover)
+	  .on("mousemove", mousemove)
+	  .on("mouseout", mouseOutHandler)
 	  .on("click", clicked );
+
+	// Create tooltip
+	  var Tooltip = d3.select("#geomap")
+	  .append("div")
+	  .style("opacity", 0)
+	  .attr("class", "tooltip")
+	  .style("background-color", "white")
+	  .style("border", "solid")
+	  .style("border-width", "2px")
+	  .style("border-radius", "5px")
+	  .style("padding", "5px")
+  
+	  function mousemove(d) {
+		
+		console.log(d.properties.name);
+
+		Tooltip
+		  .html(d.properties.name)
+		  .style("left", (d3.mouse(this)[0] + 20 ) + "px")
+		  .style("top", (d3.mouse(this)[1]) + "px")
+	  }
+
+	  function mouseover(d){
+
+		//console.log(d.properties.name);
+		Tooltip
+		.style("opacity", 1)
+	  d3.select(this)
+		.style("stroke", "black")
+		.style("opacity", 1)
+	  }
+
+	  function mouseOutHandler(d){
+		Tooltip
+		.style("opacity", 0)
+	  d3.select(this)
+		.style("stroke", "none")
+		.style("opacity", 0.8)  
+	  }
 
 	  function clicked(d) {
 		label = d.properties.name;
