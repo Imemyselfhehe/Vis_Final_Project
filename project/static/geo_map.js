@@ -21,7 +21,7 @@ function geoMap(feature , data) {
 		// var margin = {top: 50, right: 10, bottom: 30, left: 150},
     	// 	width = 1100 - margin.left - margin.right,
     	// 	height = 550 - margin.top - margin.bottom;
-		var width = "80%";
+		var width = "75%";
 		var height = "100%";
 
 

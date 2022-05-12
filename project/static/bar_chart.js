@@ -1,12 +1,34 @@
 
-function calculate_bins(n_bins, data){
-    var bin_width = data.length / n_bins;
-    var current_bin = bin_width;
+// function calculate_bins(n_bins, data){
+    function calculate_bins(data){
+    n_bins = data.length / 100;
+    console.log(n_bins);
+    let bins_x = [];
     let hist_data = [];
 
-    let bins_x = [];
+
+    if(n_bins < 1){
+        n_bins *= 100;
+        n_bins /= 2;
+        console.log(n_bins);
+
+        var rangeMin = d3.min(data.map(function(d) { return d.median_square_feet; }));
+        var rangeMax = d3.max(data.map(function(d) { return d.median_square_feet; }));
+        var range = rangeMax - rangeMin;
+        console.log(range);
+
+        var bin_width = range / n_bins; // 
+        var last_bin = rangeMin;
+        var current_bin = last_bin + bin_width;
+        
+    } else{
+        var bin_width = data.length / n_bins;
+        var current_bin = bin_width;
+    
+    }
     for(b = 0; b < n_bins; b++){
         last_bin = parseInt(current_bin) - parseInt(bin_width);
+        // + parseInt(current_bin) - parseInt(bin_width);
         bins_x[b] = last_bin + " - " + parseInt(current_bin);
         hist_data[b] = 0
         for(i = 0; i < data.length; i ++){
@@ -16,6 +38,8 @@ function calculate_bins(n_bins, data){
         }
         current_bin += bin_width;
     }
+
+
     return {bins_x,hist_data};
 }
 
@@ -51,8 +75,10 @@ function new_barchart( data ){
  
 
     //d3.csv("get_inventory_csv", function(data) {
-        n_bins = 20;
-        var {bins_x,hist_data} = calculate_bins(n_bins,data)
+        //n_bins = 20;
+       
+        //var {bins_x,hist_data} = calculate_bins(n_bins,data)
+        var {bins_x,hist_data} = calculate_bins(data)
         // X axis
         data_new = [];
         for(i = 0 ; i < n_bins; i ++){
