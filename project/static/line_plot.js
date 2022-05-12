@@ -41,15 +41,14 @@ var y = d3.scaleLinear().range([height, 0])
 
 svg.append("path")
 .datum(nsum)
-.attr("fill", "none")
-.attr("stroke", "black")
+.attr("fill", "#cce5df")
+.attr("stroke", "#69b3a2")
 .attr("stroke-width", 1.5)
-.attr("d", d3.line()
-// Just add that to have a curve instead of segments
-.x(function(d, i) {  return x(i+1); })
-.y(function(d) { return y((parseInt(d.value))/1000000); })
-);
-
+.attr("d", d3.area()
+  .x(function(d , i) { return x( i+1 ) })
+  .y0(y(0))
+  .y1(function(d) { return y((parseInt(d.value))/1000000); })
+  )
 
 svg.append("g")
 .attr("transform", "translate(0," + height + ")")

@@ -24,22 +24,22 @@ function drawScatterPlot(data){
         .domain([0,d3.max(data.map(function(d) { return d.new_listing_count; }))/1000])
         .range([ 0, width ]);
 
-    // svg.append("text")
-    // .attr("class", "axis_label")
-    // .attr("text-anchor", "middle")
-    // .attr("transform", "translate("+ (-70) +","+(height/2)+")rotate(-90)")
-    // .text("Active Listing Count")
-    // .attr("font-size", 14);
+    svg.append("text")
+    .attr("class", "axis_label")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate("+ (0) +","+(height/2)+")rotate(-90)")
+    .text("Active Listing Count")
+    .attr("font-size", 14);
 
 
     // var h = parseInt(height) + 100;
 
-    // svg.append("text")
-    // .attr("class", "axis_label")
-    // .attr("text-anchor", "middle")
-    // .attr("transform", "translate("+ (width/2) +","+(h)+")")
-    // .text("New Listing Count")
-    // .attr("font-size", 14);
+    svg.append("text")
+    .attr("class", "axis_label")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate("+ (width/2) +","+(height)+")")
+    .text("New Listing Count")
+    .attr("font-size", 14);
 
 
     svg.append("g")
@@ -61,9 +61,10 @@ function drawScatterPlot(data){
         .append("circle")
         .attr("cx", function (d) { return x(d.new_listing_count/1000); } )
         .attr("cy", function (d) { return y(d.price_increased_count); } )
-        .attr("r", 1.5)
+        .attr("r", 5)
         // .style("fill", "#69b3a2")
         .style("fill", "#957DAD")
+        .style("opacity" , 0.5)
 
         
     //})
