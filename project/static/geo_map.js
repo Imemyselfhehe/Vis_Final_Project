@@ -51,7 +51,6 @@ var svg = d3.select("#geomap")
 // Load in my states data!
 //d3.csv("get_inventory_csv", function(data) {
 	var dataArray = [];
-	console.log(data);
 	for (var d = 0; d < data.length; d++) {
 		dataArray.push(parseFloat(data[d][feature]))
 	}
@@ -90,16 +89,27 @@ var svg = d3.select("#geomap")
       }
     }
 
+
     // Bind the data to the SVG and create one path per GeoJSON feature
     svg.selectAll("path")
       .data(json.features)
       .enter()
       .append("path")
       .attr("d", path)
+	  .attr("name", function(d) { return d.properties.name;})
+	  .attr("id", function(d) { return d.id;})
       .style("stroke", "#fff")
       .style("stroke-width", "1")
-      .style("fill", function(d) {return ramp(d.properties.value) });
-    
+      .style("fill", function(d) { return ramp(d.properties.value) })
+	  //.on("mouseover", mouseover)
+	  //.on("mouseout", mouseOutHandler)
+	  .on("click", clicked );
+
+	  function clicked(d) {
+		label = d.properties.name;
+		SelectState(label);
+	  }
+	    
 		// add a legend
 		var w = 80, h = 300;
 
@@ -163,7 +173,6 @@ function geomapFlask( id, date ){
       .then(data => data.json())
       .then(response => {
         geomapData = JSON.parse(response.geomapPlotData);
-		console.log(geomapData);
 		id = response.id;
 		//feature = response.feature;
         geoMap(id , geomapData);

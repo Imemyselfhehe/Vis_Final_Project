@@ -1,6 +1,6 @@
   
 
-lineplotFlask(null);
+lineplotFlask(null , null);
 function new_lineplot(data){
 
 var margin = {top: 30, right: 30, bottom: 70, left: 300},
@@ -34,8 +34,6 @@ var nsum = d3.nest()
 .key(function(d) { return d.month; })
 .rollup(function(v) { return d3.sum(v, function(d) { return d.median_listing_price; }); })
 .entries(data);
-
-console.log(nsum);
 
 var y = d3.scaleLinear().range([height, 0])
 .domain([0, d3.max(nsum, function(d) {  return parseInt(d.value); })]);
@@ -86,7 +84,7 @@ svg.append("text")
 //});
 
 }
-function lineplotFlask( date ){
+function lineplotFlask( feature , value ){
     let url = "http://127.0.0.1:5000/lineplot"
     // const data = { request: 'example' };
   
@@ -95,7 +93,7 @@ function lineplotFlask( date ){
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ req: 'linePlot' , 'date' : date }),
+      body: JSON.stringify({ req: 'linePlot' , 'feature' : feature  , 'value' : value }),
   })
       .then(data => data.json())
       .then(response => {

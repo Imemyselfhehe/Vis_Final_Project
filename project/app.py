@@ -25,7 +25,8 @@ def defaultroute():
     PCPPlotData = get_data()
     if request.method == 'POST':
         req = request.get_json().get("req")
-        selectedDate = request.get_json().get("date")
+        feature = request.get_json().get("feature")
+        value = request.get_json().get("value")
 
         #if request.form['request'] == 'PCPPlot':
         #print(req)
@@ -33,9 +34,11 @@ def defaultroute():
         #print(selectedDate)
 
         if req == 'PCPPlot':
-          if selectedDate != None:
-            PCPPlotData = PCPPlotData[ ( PCPPlotData["year"] == int(selectedDate) ) ]
-          #print(PCPPlotData)
+          if value != None:
+            if feature == "state":
+              PCPPlotData = PCPPlotData[ ( PCPPlotData[feature] == value.lower() ) ]
+            else:
+              PCPPlotData = PCPPlotData[ ( PCPPlotData[feature] == int(value) ) ]          #print(PCPPlotData)
           data = {'PCPPlotData': json.dumps(PCPPlotData.to_dict(orient="records"))}
           return jsonify(data)
     # else:
@@ -44,17 +47,18 @@ def defaultroute():
 @app.route('/bar', methods=['POST', 'GET'])
 def defaultroute2():
     df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
-    df = df.iloc[0:2000,2:]
+    df = df.iloc[0:2000, :]
     df = df.dropna()
     columns = df.columns
-    df = df._get_numeric_data()
+    #df = df._get_numeric_data()
     #print(df)
-    barPlotData = df[[ "median_square_feet" , "active_listing_count" ,  "year"]]
+    barPlotData = df[[ "median_square_feet" , "active_listing_count" ,  "year" , "state"]]
     #print(df)
 
     if request.method == 'POST':
         req = request.get_json().get("req")
-        selectedDate = request.get_json().get("date")
+        feature = request.get_json().get("feature")
+        value = request.get_json().get("value")
 
         #if request.form['request'] == 'PCPPlot':
         #print(req)
@@ -62,35 +66,40 @@ def defaultroute2():
 
 
         if req == 'barPlot':
-          if selectedDate != None:
-            barPlotData = barPlotData[ ( barPlotData["year"] == int(selectedDate) ) ]
-          #print(barPlotData)
+          if value != None:
+            if feature == "state":
+              barPlotData = barPlotData[ ( barPlotData[feature] == value.lower() ) ]
+            else:
+              barPlotData = barPlotData[ ( barPlotData[feature] == int(value) ) ]          #print(barPlotData)
           data = {'barPlotData': json.dumps(barPlotData.to_dict(orient="records"))}
           return jsonify(data)
 
 @app.route('/lineplot', methods=['POST', 'GET'])
 def defaultroute3():
     df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
-    df = df.iloc[0:2000,2:]
+    df = df.iloc[0:2000,:]
     df = df.dropna()
     columns = df.columns
-    df = df._get_numeric_data()
+    #df = df._get_numeric_data()
     #print(df)
-    lineplotData = df[[ "median_listing_price" , "month" ,  "year"]]
+    lineplotData = df[[ "median_listing_price" , "month" ,  "year" , "state"]]
     #print(df)
 
     if request.method == 'POST':
         req = request.get_json().get("req")
-        selectedDate = request.get_json().get("date")
+        feature = request.get_json().get("feature")
+        value = request.get_json().get("value")
 
         #if request.form['request'] == 'PCPPlot':
         #print(req)
         #print(lineplotData)
 
         if req == 'linePlot':
-          if selectedDate != None:
-            lineplotData = lineplotData[ ( lineplotData["year"] == int(selectedDate) ) ]
-          #print(lineplotData)
+          if value != None:
+            if feature == "state":
+              lineplotData = lineplotData[ ( lineplotData[feature] == value.lower() ) ]
+            else:
+              lineplotData = lineplotData[ ( lineplotData[feature] == int(value) ) ]          #print(lineplotData)
           data = {'lineplotData': json.dumps(lineplotData.to_dict(orient="records"))}
           return jsonify(data)
 
@@ -129,17 +138,18 @@ def defaultroute4():
 @app.route('/scatterplot', methods=['POST', 'GET'])
 def defaultroute5():
     df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
-    df = df.iloc[0:2000,2:]
+    df = df.iloc[0:2000,:]
     df = df.dropna()
     columns = df.columns
-    df = df._get_numeric_data()
+    #df = df._get_numeric_data()
     #print(df)
-    ScatterPlotData = df[[ "new_listing_count" , "price_increased_count" ,  "year"]]
+    ScatterPlotData = df[[ "new_listing_count" , "price_increased_count" ,  "year" , "state" ]]
     #print(df)
 
     if request.method == 'POST':
         req = request.get_json().get("req")
-        selectedDate = request.get_json().get("date")
+        feature = request.get_json().get("feature")
+        value = request.get_json().get("value")
 
         #if request.form['request'] == 'PCPPlot':
         #print(req)
@@ -147,8 +157,11 @@ def defaultroute5():
 
 
         if req == 'ScatterPlot':
-          if selectedDate != None:
-            ScatterPlotData = ScatterPlotData[ ( ScatterPlotData["year"] == int(selectedDate) ) ]
+          if value != None:
+            if feature == "state":
+              ScatterPlotData = ScatterPlotData[ ( ScatterPlotData[feature] == value.lower() ) ]
+            else:
+              ScatterPlotData = ScatterPlotData[ ( ScatterPlotData[feature] == int(value) ) ]
           #print(barPlotData)
           data = {'ScatterPlotData': json.dumps(ScatterPlotData.to_dict(orient="records"))}
           return jsonify(data)
@@ -167,9 +180,10 @@ def serve_csv():
 def get_data():
   df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
   # df = pd.read_csv(r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv')
-  df = df.iloc[0:2000,2:]
+  df = df.iloc[0:2000, : ]
   df = df.dropna()
   columns = df.columns
+  tdf = df.copy(deep=False)
   df = df._get_numeric_data()
   x = df.values
   x = scale(x)
@@ -213,7 +227,9 @@ def get_data():
   column_names.append(columns[max_pca[-3]])
   column_names.append(columns[max_pca[-4]])
   column_names.append("year")
+  #column_names.append("state")
   PCPPlotData = df[column_names]
+  PCPPlotData["state"] = tdf["state"]
   kmeanModel = KMeans(n_clusters=optimal_k)
   kmeanModel.fit(df)
   PCPPlotData["K_Means"] = kmeanModel.predict(df)

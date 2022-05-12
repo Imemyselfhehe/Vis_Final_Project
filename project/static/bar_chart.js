@@ -20,7 +20,7 @@ function calculate_bins(n_bins, data){
 }
 
 //barchart();
-barFlask( null );
+barFlask( null , null );
 function new_barchart( data ){
     
         // set the dimensions and margins of the graph
@@ -32,7 +32,7 @@ function new_barchart( data ){
 	// var height = "300";
 
     // append the svg object to the body of the page
-    console.log(document.getElementById("barchart").innerHTML);
+    console.log(data);
 
     d3.selectAll("#barchart svg").remove();
 
@@ -53,7 +53,6 @@ function new_barchart( data ){
     //d3.csv("get_inventory_csv", function(data) {
         n_bins = 20;
         var {bins_x,hist_data} = calculate_bins(n_bins,data)
-        console.log(bins_x, hist_data)
         // X axis
         data_new = [];
         for(i = 0 ; i < n_bins; i ++){
@@ -82,7 +81,6 @@ function new_barchart( data ){
         svg.append("g")
         .call(d3.axisLeft(y));
 
-        console.log(data_new)
         // Bars
         svg.selectAll("mybar")
         .data(data_new)
@@ -114,7 +112,7 @@ function new_barchart( data ){
         .attr("font-size", 14);
     //})
 }
-function barFlask( date ){
+function barFlask( feature , value ){
     let url = "http://127.0.0.1:5000/bar"
     // const data = { request: 'example' };
   
@@ -123,7 +121,7 @@ function barFlask( date ){
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ req: 'barPlot' , 'date' : date }),
+      body: JSON.stringify({ req: 'barPlot' , 'feature' : feature, 'value' : value }),
   })
       .then(data => data.json())
       .then(response => {
