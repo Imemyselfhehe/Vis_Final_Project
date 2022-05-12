@@ -3,9 +3,9 @@
 lineplotFlask(null , null);
 function new_lineplot(data){
 
-var margin = {top: 30, right: 30, bottom: 70, left: 300},
+var margin = {top: 30, right: 30, bottom: 70, left: 30},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
-width = 900 - margin.left - margin.right,
+width = 350 - margin.left - margin.right,
 height = 350 - margin.top - margin.bottom;
 
 //$('body>.tooltip').remove();
@@ -36,7 +36,7 @@ var nsum = d3.nest()
 .entries(data);
 
 var y = d3.scaleLinear().range([height, 0])
-.domain([0, d3.max(nsum, function(d) {  return parseInt(d.value); })]);
+.domain([0, d3.max(nsum, function(d) {  return parseInt(d.value); })/1000000]);
 
 
 svg.append("path")
@@ -47,7 +47,7 @@ svg.append("path")
 .attr("d", d3.line()
 // Just add that to have a curve instead of segments
 .x(function(d, i) {  return x(i+1); })
-.y(function(d) { return y(parseInt(d.value)); })
+.y(function(d) { return y((parseInt(d.value))/1000000); })
 );
 
 

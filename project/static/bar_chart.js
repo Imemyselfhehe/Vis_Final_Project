@@ -51,7 +51,7 @@ function new_barchart( data ){
     var margin = {top: 30, right: 30, bottom: 70, left: 80},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
     width = 430 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    height = 380 - margin.top - margin.bottom;
     // var width = "350";
 	// var height = "300";
 
