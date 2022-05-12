@@ -22,15 +22,109 @@ def index():
 
 @app.route('/pcp', methods=['POST', 'GET'])
 def defaultroute():
+    PCPPlotData = get_data()
     if request.method == 'POST':
         req = request.get_json().get("req")
+        selectedDate = request.get_json().get("date")
 
         #if request.form['request'] == 'PCPPlot':
+        #print(req)
+        #print(PCPPlotData)
+        #print(selectedDate)
+
         if req == 'PCPPlot':
-            data = {'PCPPlotData': json.dumps(PCPPlotData.to_dict(orient="records"))}
-            return jsonify(data)
+          if selectedDate != None:
+            PCPPlotData = PCPPlotData[ ( PCPPlotData["year"] == int(selectedDate) ) ]
+          #print(PCPPlotData)
+          data = {'PCPPlotData': json.dumps(PCPPlotData.to_dict(orient="records"))}
+          return jsonify(data)
     # else:
     #     return render_template('index.html')
+
+@app.route('/bar', methods=['POST', 'GET'])
+def defaultroute2():
+    df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
+    df = df.iloc[0:2000,2:]
+    df = df.dropna()
+    columns = df.columns
+    df = df._get_numeric_data()
+    #print(df)
+    barPlotData = df[[ "median_square_feet" , "active_listing_count" ,  "year"]]
+    #print(df)
+
+    if request.method == 'POST':
+        req = request.get_json().get("req")
+        selectedDate = request.get_json().get("date")
+
+        #if request.form['request'] == 'PCPPlot':
+        #print(req)
+        #print(barPlotData)
+
+
+        if req == 'barPlot':
+          if selectedDate != None:
+            barPlotData = barPlotData[ ( barPlotData["year"] == int(selectedDate) ) ]
+          #print(barPlotData)
+          data = {'barPlotData': json.dumps(barPlotData.to_dict(orient="records"))}
+          return jsonify(data)
+
+@app.route('/lineplot', methods=['POST', 'GET'])
+def defaultroute3():
+    df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
+    df = df.iloc[0:2000,2:]
+    df = df.dropna()
+    columns = df.columns
+    df = df._get_numeric_data()
+    #print(df)
+    lineplotData = df[[ "median_listing_price" , "month" ,  "year"]]
+    #print(df)
+
+    if request.method == 'POST':
+        req = request.get_json().get("req")
+        selectedDate = request.get_json().get("date")
+
+        #if request.form['request'] == 'PCPPlot':
+        #print(req)
+        #print(lineplotData)
+
+        if req == 'linePlot':
+          if selectedDate != None:
+            lineplotData = lineplotData[ ( lineplotData["year"] == int(selectedDate) ) ]
+          #print(lineplotData)
+          data = {'lineplotData': json.dumps(lineplotData.to_dict(orient="records"))}
+          return jsonify(data)
+
+@app.route('/geomap', methods=['POST', 'GET'])
+def defaultroute4():
+    df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
+    #df = df.iloc[0:2000,:]
+    df = df.dropna()
+    columns = df.columns
+    #df = df._get_numeric_data()
+    #print(columns)
+    #geomapData = df
+    #print(df)
+    geomapData = df
+    if request.method == 'POST':
+        print("hello")
+        req = request.get_json().get("req")
+        selectedDate = request.get_json().get("date")
+        id = request.get_json().get("id")
+        #feature = request.get_json().get("feature")
+
+        #if request.form['request'] == 'PCPPlot':
+        #print( df.columns )
+        #geomapData = df[[ feature , "state" , "year" ]]
+        geomapData = df
+        #print(geomapData.columns)
+        #print(geomapData)
+
+        if req == 'geomapPlot':
+          if selectedDate != None:
+            geomapData = geomapData[ ( geomapData["year"] == int(selectedDate) ) ]
+          print(geomapData)
+          data = {'geomapPlotData': json.dumps(geomapData.to_dict(orient="records")) , "id": id  }
+          return jsonify(data)
 
 @app.route('/get_inventory_csv')
 def serve_csv():
@@ -42,7 +136,8 @@ def serve_csv():
     # Send the file back to the client
   return send_file(csv_path, as_attachment=True, attachment_filename="inventory.csv")
 
-if __name__ == '__main__':
+
+def get_data():
   df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
   # df = pd.read_csv(r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv')
   df = df.iloc[0:2000,2:]
@@ -90,11 +185,15 @@ if __name__ == '__main__':
   column_names.append(columns[max_pca[-2]])
   column_names.append(columns[max_pca[-3]])
   column_names.append(columns[max_pca[-4]])
+  column_names.append("year")
   PCPPlotData = df[column_names]
   kmeanModel = KMeans(n_clusters=optimal_k)
   kmeanModel.fit(df)
   PCPPlotData["K_Means"] = kmeanModel.predict(df)
+  return PCPPlotData
 
+if __name__ == '__main__':
+  PCPPlotData = get_data()
 
   #scatter
   # np.set_printoptions(threshold=1000)

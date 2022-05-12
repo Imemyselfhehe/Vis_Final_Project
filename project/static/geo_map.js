@@ -1,5 +1,7 @@
-geoMap(1,'median_listing_price');
-function geoMap(clicked_id,feature) {
+//document.getElementById("1").classList.add('active');
+geomapFlask('median_listing_price' , null);
+
+function geoMap(feature , data) {
 	if(document.getElementById("geomap") != null) 
         document.getElementById("geomap").innerHTML = "";
 
@@ -8,6 +10,8 @@ function geoMap(clicked_id,feature) {
 		child_lis[i].classList.remove('active');
 		child_lis[i].classList.add('link-dark');
 	}
+
+	var clicked_id = feature;
 
 	const clicked = document.getElementById(clicked_id);
 	clicked.classList.add("active");
@@ -24,6 +28,7 @@ function geoMap(clicked_id,feature) {
 var lowColor = '#f9f9f9'
 var highColor = '#bc2a66'
 
+
 // D3 Projection
 var projection = d3.geoAlbersUsa()
   .translate([200, 200]) // translate to center of screen
@@ -34,6 +39,9 @@ var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
   .projection(projection); // tell path generator to use albersUsa projection
 	//d3.select("svg").remove();
 //Create SVG element and append map to the SVG
+
+d3.selectAll("#geomap svg").remove();
+
 var svg = d3.select("#geomap")
   .append("svg")
   .attr("width", width)
@@ -41,8 +49,9 @@ var svg = d3.select("#geomap")
 
 //var feature = "median_listing_price";
 // Load in my states data!
-d3.csv("get_inventory_csv", function(data) {
+//d3.csv("get_inventory_csv", function(data) {
 	var dataArray = [];
+	console.log(data);
 	for (var d = 0; d < data.length; d++) {
 		dataArray.push(parseFloat(data[d][feature]))
 	}
@@ -136,5 +145,27 @@ d3.csv("get_inventory_csv", function(data) {
 			.attr("transform", "translate(30,10)")
 			.call(yAxis)
   });
-});
+//});
+
 }
+
+function geomapFlask( id, date ){
+    let url = "http://127.0.0.1:5000/geomap"
+    // const data = { request: 'example' };
+  
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ req: 'geomapPlot' , 'date' : date ,  'id' : id }),
+  })
+      .then(data => data.json())
+      .then(response => {
+        geomapData = JSON.parse(response.geomapPlotData);
+		console.log(geomapData);
+		id = response.id;
+		//feature = response.feature;
+        geoMap(id , geomapData);
+      });
+  }

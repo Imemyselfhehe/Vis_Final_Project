@@ -20,7 +20,7 @@
   
 <!-- <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#" onclick="geoMap()">Median Listing Price</a>
+  <a href="#" onclick="geoMapFlask()">Median Listing Price</a>
   <a href="#">Median Listing Price MM</a>
   <a href="#">Median Listing Price YY</a>
   <a href="#">Active Listing Count</a>
@@ -31,68 +31,60 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 220px; height:100%;" >
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price')" id="1"> Median Listing Price </a>
+      <a href="#" class="nav-link link-dark side-li active" onclick="geomapFlask(this.id , null); this.classList.add('active');" id="median_listing_price"> Median Listing Price </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_mm')" id="2"> Median Listing Price MM </a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_listing_price_mm"> Median Listing Price MM </a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_yy')" id="3"> Median Listing Price YY </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price')" id="4"> Active Listing Count </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price_mm')" id="5"> Active Listing Count MM </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'active_listing_price_yy')" id="6"> Active Listing Count YY </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count')" id="7"> New Listing Count</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count_mm')" id="8"> New Listing Count MM</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'new_listing_count_yy')" id="9"> New Listing Count YY</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count')" id="10"> Price Increased Count</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count_mm')" id="11"> Price Increased Count MM</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'price_increased_count_yy')" id="12"> Price Increased Count YY</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_listing_price_yy"> Median Listing Price YY </a>
     </li>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot')" id="13"> Median Listing Price per Square Foot</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="new_listing_count"> New Listing Count</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot_mm')" id="14"> Median Listing Price per Square Foot MM</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="new_listing_count_mm"> New Listing Count MM</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_listing_price_per_square_foot_yy')" id="15"> Median Listing Price per Square Foot YY</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="new_listing_count_yy"> New Listing Count YY</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet')" id="16"> Median Square Feet</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="price_increased_count"> Price Increased Count</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet_mm')" id="17"> Median Square Feet MM</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="price_increased_count_mm"> Price Increased Count MM</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'median_square_feet_yy')" id="18"> Median Square Feet YY</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="price_increased_count_yy"> Price Increased Count YY</a>
+    </li>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price')" id="19"> Average Listing Price</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_listing_price_per_square_foot"> Median Listing Price per Square Foot</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price_mm')" id="20"> Average Listing Price MM</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_listing_price_per_square_foot_mm"> Median Listing Price per Square Foot MM</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark side-li" onclick="geoMap(this.id,'average_listing_price_yy')" id="21"> Average Listing Price YY</a>
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_listing_price_per_square_foot_yy"> Median Listing Price per Square Foot YY</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_square_feet"> Median Square Feet</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_square_feet_mm"> Median Square Feet MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="median_square_feet_yy"> Median Square Feet YY</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="average_listing_price"> Average Listing Price</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="average_listing_price_mm"> Average Listing Price MM</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link link-dark side-li" onclick="geomapFlask(this.id,null);this.classList.add('active');" id="average_listing_price_yy"> Average Listing Price YY</a>
     </li>
 
   </ul>
@@ -120,6 +112,23 @@
 <div class="col" id="scatterplot">
 </div>
 </div>
+  <div class="col" id="year">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link link-dark side-li" onclick="SelectDate(this.id)" id="2018"> 2018 </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-dark side-li" onclick="SelectDate(this.id)" id="2019"> 2019 </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-dark side-li" onclick="SelectDate(this.id)" id="2020"> 2020 </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-dark side-li" onclick="SelectDate(this.id)" id="2021"> 2021 </a>
+      </li>
+    </ul>
+  </div>
+  </div>
 
 </div>
 <script type="text/javascript">
@@ -138,6 +147,7 @@ function closeNav() {
 <script src="../static/bar_chart.js"></script>
 <script src="../static/line_plot.js"></script>
 <script src="../static/scatter_plot.js"></script>
+<script src="../static/select_date.js"></script>
 
 </body>
 </html>
