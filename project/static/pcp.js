@@ -2,8 +2,8 @@ var variables = [];
 
 PCPPlotFlask( null , null );
 function drawPCPPlot(data) {
-  		var margin = {top: 50, right: 30, bottom: 30, left: 300},
-    		width = 700 - margin.left - margin.right,
+  		var margin = {top: 50, right: 30, bottom: 30, left: 250},
+    		width = 850 - margin.left - margin.right,
     		height = 300 - margin.top - margin.bottom;
 
     d3.selectAll("#pcp svg").remove();	

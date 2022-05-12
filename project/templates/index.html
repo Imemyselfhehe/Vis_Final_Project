@@ -27,8 +27,8 @@
 </div> -->
 <div class="container container-new">
   <div class="row">
-  <div class="col-sm-4 sidemenu-new">
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 220px; height:100%;" >
+  <div class="col-sm-2 sidemenu-new">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 200px; height:100%;" >
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
       <a href="#" class="nav-link link-dark side-li active" onclick="geomapFlask(this.id , null); this.classList.add('active');" id="median_listing_price"> Median Listing Price </a>
@@ -91,27 +91,26 @@
 
 </div>
 </div>
-
-<div class="col" id="geomap">
-</div>
-
-<div class="col" id="pcp">
-</div>
+  <div class="col-sm-10 offset-sm-2">
+    <div class="row" style="width: 1150px;">
+      <div class="col-sm-6 offset-sm-2" id="geomap" style="margin-left: 10px;">
+      </div>
+      <div id="pcp" style="position: absolute;" class="offset-sm-4">
+      </div>
+      
+      </div>
+      <div class="row">
+        <div class="col-sm-6" id="barchart">
+        </div>
+        <div class="col" id="scatterplot">
+        </div>
+      
+      <div class="col" id="lineplot">
+      </div>
+    </div>
+  
 
 <div class="row">
-<div class="col" id="barchart">
-</div>
-</div>
-
-<div class="row">
-<div class="col" id="lineplot">
-</div>
-</div>
-
-<div class="row">
-<div class="col" id="scatterplot">
-</div>
-</div>
   <div class="col" id="year">
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
@@ -128,8 +127,9 @@
       </li>
     </ul>
   </div>
+</div>
+</div>
   </div>
-
 </div>
 <script type="text/javascript">
 function openNav() {
