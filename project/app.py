@@ -10,6 +10,7 @@ from sklearn.manifold import MDS
 from sklearn.decomposition import PCA
 from collections import OrderedDict
 import os 
+import sys
 
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/pcp', methods=['POST', 'GET'])
 def defaultroute():
@@ -127,6 +129,8 @@ def defaultroute4():
 @app.route('/get_inventory_csv')
 def serve_csv():
   csv_path = r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv'
+  # csv_path = r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv'
+# pd.read_csv()
   if not os.path.isfile(csv_path):
     return "ERROR: file was not found on the server"
     # Send the file back to the client
@@ -135,13 +139,14 @@ def serve_csv():
 
 def get_data():
   df = pd.read_csv(r'/Users/ravalip/Documents/2nd_semester/visualization/github/Vis_Final_Project/project/data/RDC_Inventory_Core_Metrics_State_History.csv')
+  # df = pd.read_csv(r'C:\Users\yashi\Desktop\CSE564\VisProject\Vis_Final_Project\project\data\RDC_Inventory_Core_Metrics_State_History.csv')
   df = df.iloc[0:2000,2:]
   df = df.dropna()
   columns = df.columns
   df = df._get_numeric_data()
   x = df.values
   x = scale(x)
-  print("----", x)
+  # print("----", x)
   """
   mds = MDS(dissimilarity='euclidean')
   mds = mds.fit_transform(x)
@@ -189,6 +194,15 @@ def get_data():
 
 if __name__ == '__main__':
   PCPPlotData = get_data()
+
+  #scatter
+  # np.set_printoptions(threshold=1000)
+  # scatter_data = df.corr(method='pearson')
+  # scatter_data.columns = df.columns
+  # # np.savetxt("foo.csv", scatter_data, delimiter=",")
+  # df.columns
+  # print(corrMat)
+
 
 
 app.run(debug=True)
