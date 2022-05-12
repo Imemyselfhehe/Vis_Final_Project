@@ -5,8 +5,8 @@ function new_lineplot(data){
 
 var margin = {top: 30, right: 30, bottom: 70, left: 300},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
-width = 700 - margin.left - margin.right,
-height = 400 - margin.top - margin.bottom;
+width = 900 - margin.left - margin.right,
+height = 350 - margin.top - margin.bottom;
 
 //$('body>.tooltip').remove();
 d3.selectAll("#lineplot svg").remove();

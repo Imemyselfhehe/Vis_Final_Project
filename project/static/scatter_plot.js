@@ -1,8 +1,8 @@
 scatterPlotFlask( null , null);
 function drawScatterPlot(data){
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = 380 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
     d3.selectAll("#scatterplot svg").remove();	
 
@@ -21,7 +21,7 @@ function drawScatterPlot(data){
     // Add X axis
     var x = d3.scaleLinear()
         // .domain([0, 4000])
-        .domain([0,d3.max(data.map(function(d) { return d.new_listing_count; }))])
+        .domain([0,d3.max(data.map(function(d) { return d.new_listing_count; }))/1000])
         .range([ 0, width ]);
 
     // svg.append("text")
@@ -59,7 +59,7 @@ function drawScatterPlot(data){
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", function (d) { return x(d.new_listing_count); } )
+        .attr("cx", function (d) { return x(d.new_listing_count/1000); } )
         .attr("cy", function (d) { return y(d.price_increased_count); } )
         .attr("r", 1.5)
         // .style("fill", "#69b3a2")

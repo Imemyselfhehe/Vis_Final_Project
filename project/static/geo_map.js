@@ -21,7 +21,7 @@ function geoMap(feature , data) {
 		// var margin = {top: 50, right: 10, bottom: 30, left: 150},
     	// 	width = 1100 - margin.left - margin.right,
     	// 	height = 550 - margin.top - margin.bottom;
-		var width = "75%";
+		var width = "73%";
 		var height = "100%";
 
 
@@ -31,8 +31,8 @@ var highColor = '#bc2a66'
 
 // D3 Projection
 var projection = d3.geoAlbersUsa()
-  .translate([200, 200]) // translate to center of screen
-  .scale([550]); // scale things down so see entire US
+  .translate([200, 170]) // translate to center of screen
+  .scale([530]); // scale things down so see entire US
 
 // Define path generator
 var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths

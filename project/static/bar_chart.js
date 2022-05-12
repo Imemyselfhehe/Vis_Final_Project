@@ -50,7 +50,7 @@ function new_barchart( data ){
         // set the dimensions and margins of the graph
     var margin = {top: 30, right: 30, bottom: 70, left: 80},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
-    width = 450 - margin.left - margin.right,
+    width = 430 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
     // var width = "350";
 	// var height = "300";
@@ -98,12 +98,14 @@ function new_barchart( data ){
         .call(d3.axisBottom(x))
         .selectAll("text")
         .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
+        .style("text-anchor", "end")
+        .style("font-size","10");
 
         // Add Y axis
         var y = d3.scaleLinear()
-        .domain([0, d3.max(hist_data)])
+        .domain([0, (d3.max(hist_data)/1000000)])
         .range([ height, 0]);
+
         svg.append("g")
         .call(d3.axisLeft(y));
 
@@ -114,18 +116,18 @@ function new_barchart( data ){
         .append("rect")
         // .attr("x", function(d) { return x(d.Country); })
         .attr("x", function(d) { return x(d.median_sq_feet); })
-        .attr("y", function(d) { return y(d.atv_listing_ct); })
+        .attr("y", function(d) { return y((d.atv_listing_ct/1000000)); })
         //.attr("y", function(d) { return y(d.Value); })
         .attr("width", x.bandwidth())
         //.attr("height", function(d) { return height - y(d.Value); })
-        .attr("height", function(d) { return height - y(d.atv_listing_ct); })
+        .attr("height", function(d) { return height - y((d.atv_listing_ct/1000000)); })
         .attr("fill", "#69b3a2")
 
         svg.append("text")
         .attr("class", "axis_label")
         .attr("text-anchor", "middle")
-        .attr("transform", "translate("+ (-70) +","+(height/2)+")rotate(-90)")
-        .text("Active Listing Count")
+        .attr("transform", "translate("+ (-43) +","+(height/2)+")rotate(-90)")
+        .text("Active Listing Count (in Millions)")
         .attr("font-size", 14);
         
         var h = parseInt(height) + 66;
