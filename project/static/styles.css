@@ -12,9 +12,15 @@ body {
     height: 100%;
     padding-bottom: 15px;
 }
+/* #geomap-c{
+    width: 30rem;
+    height: 20rem;
+    margin-left: 2rem;
+    margin-top: 2rem;
+} */
 #geomap{
-    height: 350px;
-    margin-left: 15px;
+  height: 350px;
+  margin-left: 15px;
 }
 #barchart{
     height: 400px;
@@ -31,6 +37,17 @@ body {
 #lineplot{
   padding-left: 0px;
   padding-right: 0px;
+}
+.bt{
+  margin-right: 10px;
+  width: 80px;
+  margin-top: 15px;
+  opacity: 0.9;
+  height: 40px;
+}
+.c{
+  margin-top: 15px;
+  padding: 10px;
 }
 /* Legend Position Style */
 .legend {
@@ -93,4 +110,12 @@ body {
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.side-m-li>li{
+  font-size: 12px;
+}
+
+body{
+  overflow: hidden;
 }

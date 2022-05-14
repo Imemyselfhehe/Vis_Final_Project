@@ -100,10 +100,15 @@ let di = dimensions.map(function(d) { return d.replace("_"," "); });
       .style("text-anchor", "middle")
       .attr("y", -9)
       // .text(di)
-      .text(function(d){ return d.replace("_"," ");})
+      .text(function(d){ 
+        const words = d.replaceAll("_"," ").split(" ");
+        for (let i = 0; i < words.length; i++) {
+            words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+        }
+        return words.join(" ");})
       .style("fill", "black")
       //.attr("font-size", 30);
-      .style("font-size", "8px")
+      .style("font-size", "8.5px")
 
       //.map(function(d) { return d.median_sq_feet; }))
   variables = [];

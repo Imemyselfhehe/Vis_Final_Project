@@ -1,6 +1,8 @@
 function SelectDate( clicked_id) {
 
     var active = document.getElementsByClassName("active");
+    document.getElementById("vis-year").innerHTML = "Year: " + clicked_id;
+
 
     //if active == null{
 
@@ -29,7 +31,8 @@ function SelectDate( clicked_id) {
 
 
 function SelectState( state ) {
-
+    console.log(state);
+    document.getElementById("vis-state").innerHTML = "State: "+ state;
     //var active = document.getElementsByClassName("active");
 
     PCPPlotFlask( "state" , state );

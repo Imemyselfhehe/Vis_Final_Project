@@ -2,8 +2,8 @@ scatterPlotFlask( null , null);
 function drawScatterPlot(data){
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 380 - margin.left - margin.right,
-    height = 350 - margin.top - margin.bottom;
-
+    // height = 350 - margin.top - margin.bottom;
+    height = 360;
     d3.selectAll("#scatterplot svg").remove();	
 
     // append the svg object to the body of the page
@@ -27,8 +27,8 @@ function drawScatterPlot(data){
     svg.append("text")
     .attr("class", "axis_label")
     .attr("text-anchor", "middle")
-    .attr("transform", "translate("+ (0) +","+(height/2)+")rotate(-90)")
-    .text("Active Listing Count")
+    .attr("transform", "translate("+ (-45) +","+(height/2)+")rotate(-90)")
+    .text("Price Increase Listing Count")
     .attr("font-size", 14);
 
 
@@ -37,19 +37,19 @@ function drawScatterPlot(data){
     svg.append("text")
     .attr("class", "axis_label")
     .attr("text-anchor", "middle")
-    .attr("transform", "translate("+ (width/2) +","+(height)+")")
-    .text("New Listing Count")
+    .attr("transform", "translate("+ (width/2) +","+((350 - margin.top - margin.bottom) + 35)+")")
+    .text("New Listing Count (in Thousands)")
     .attr("font-size", 14);
 
 
     svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + (350 - margin.top - margin.bottom) + ")")
         .call(d3.axisBottom(x));
 
     // Add Y axis
     var y = d3.scaleLinear()
         .domain([0,d3.max(data.map(function(d) { return d.price_increased_count; }))])
-        .range([ height, 0]);
+        .range([ (350 - margin.top - margin.bottom), 0]);
     svg.append("g")
         .call(d3.axisLeft(y));
 

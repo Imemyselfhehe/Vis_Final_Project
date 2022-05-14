@@ -6,8 +6,10 @@
     let bins_x = [];
     let hist_data = [];
 
-
-    if(n_bins < 1){
+    if(n_bins == 19.81){
+        var bin_width = data.length / n_bins;
+        var current_bin = bin_width;
+    } else if (n_bins < 1){
         n_bins *= 100;
         n_bins /= 2;
         console.log(n_bins);
@@ -20,12 +22,35 @@
         var bin_width = range / n_bins; // 
         var last_bin = rangeMin;
         var current_bin = last_bin + bin_width;
-        
     } else{
-        var bin_width = data.length / n_bins;
-        var current_bin = bin_width;
-    
+        var rangeMin = d3.min(data.map(function(d) { return d.median_square_feet; }));
+        var rangeMax = d3.max(data.map(function(d) { return d.median_square_feet; }));
+        var range = rangeMax - rangeMin;
+        console.log(range);
+
+        var bin_width = range / n_bins; // 
+        var last_bin = rangeMin;
+        var current_bin = last_bin + bin_width;
     }
+    // if(n_bins < 1){
+    //     n_bins *= 100;
+    //     n_bins /= 2;
+    //     console.log(n_bins);
+
+    //     var rangeMin = d3.min(data.map(function(d) { return d.median_square_feet; }));
+    //     var rangeMax = d3.max(data.map(function(d) { return d.median_square_feet; }));
+    //     var range = rangeMax - rangeMin;
+    //     console.log(range);
+
+    //     var bin_width = range / n_bins; // 
+    //     var last_bin = rangeMin;
+    //     var current_bin = last_bin + bin_width;
+        
+    // } else{
+    //     var bin_width = data.length / n_bins;
+    //     var current_bin = bin_width;
+    
+    // }
     for(b = 0; b < n_bins; b++){
         last_bin = parseInt(current_bin) - parseInt(bin_width);
         // + parseInt(current_bin) - parseInt(bin_width);
@@ -48,7 +73,7 @@ barFlask( null , null );
 function new_barchart( data ){
     
         // set the dimensions and margins of the graph
-    var margin = {top: 30, right: 30, bottom: 70, left: 80},
+    var margin = {top: 10, right: 30, bottom: 70, left: 80},
     // var margin = {top: 0, right: 0, bottom: 0, left: 0};
     width = 430 - margin.left - margin.right,
     height = 380 - margin.top - margin.bottom;
@@ -135,7 +160,7 @@ function new_barchart( data ){
         svg.append("text")
         .attr("class", "axis_label")
         .attr("text-anchor", "middle")
-        .attr("transform", "translate("+ (width/2) +","+(h)+")")
+        .attr("transform", "translate("+ (width/2) +","+(h - 5)+")")
         .text("Median Square Feet")
         .attr("font-size", 14);
     //})
